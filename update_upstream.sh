@@ -18,5 +18,12 @@ else
   hg -R "$checkout_dir" update tip
 fi
 
-cp -af "$checkout_dir/contrib/vim"/* .
+rsync --exclude-from=- -rvt "$checkout_dir/contrib/vim/" ./ <<EOE
+.git
+.gitignore
+.nginx
+README.md
+REVISION
+update_upstream.sh
+EOE
 hg -R "$checkout_dir" identify > "$rev_file"
