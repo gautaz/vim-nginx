@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o errexit
 
 if ! which hg > /dev/null 2>&1; then
   echo "hg is required"
@@ -13,6 +14,7 @@ if [[ ! -d "$checkout_dir" ]]; then
   hg clone "$nginx_repository" "$checkout_dir"
 else
   hg -R "$checkout_dir" revert -a
+  hg -R "$checkout_dir" pull
   hg -R "$checkout_dir" update tip
 fi
 
